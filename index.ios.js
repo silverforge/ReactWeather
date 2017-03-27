@@ -8,12 +8,17 @@ import React, { Component } from 'react';
 import {
   AppRegistry,
   StyleSheet,
-  Text,
-  View
+  StatusBar
 } from 'react-native';
 import HomeScreen from './app/layout/HomeScreen';
 
 export default class RNWeather extends Component {
+
+  constructor() {
+    super();
+    StatusBar.setBarStyle('light-content');
+  }
+
   render() {
     return (
       <HomeScreen />
