@@ -5,6 +5,7 @@ import {
 
   Image,
   ListView,
+  Platform,
   Text,
   TextInput,
   View
@@ -117,7 +118,8 @@ const styles = StyleSheet.create({
     searchText: {
         color: 'white',
         marginHorizontal: 16,
-        height: 40
+        height: 40,
+        marginTop: Platform.OS === 'ios' ? 20 : 0
     },
 
     cityBox: {
