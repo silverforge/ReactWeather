@@ -43,9 +43,13 @@ export default class HomeScreen extends Component {
                         placeholderTextColor="#ABABAB"
                         onEndEditing={(event) => {
                             console.log("::: CITY ::: " + event.nativeEvent.text);
-                            let city = event.nativeEvent.text;
+                            let data = {
+                                city: event.nativeEvent.text, 
+                                apikey: "85ce54fbbc886bee15f72e2e0e8b5a3b", 
+                                unit: "metric"
+                            };
 
-                            fetch("http://api.openweathermap.org/data/2.5/weather?q=" + city + "&units=metric&APPID=85ce54fbbc886bee15f72e2e0e8b5a3b")
+                            fetch(`http://api.openweathermap.org/data/2.5/weather?q=${data.city}&units=${data.unit}&APPID=${data.apikey}`)
                             .then((response) => response.json())
                             .then((json) => {
                                 console.log("::: JSON :::" + JSON.stringify(json));
