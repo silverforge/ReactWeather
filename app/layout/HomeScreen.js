@@ -25,6 +25,12 @@ export default class HomeScreen extends Component {
     constructor(props) {
         super(props);
         this.ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
+
+        this.state = {
+            cityName: "---",
+            celsius: 0,
+            weatherIcon: "https://upload.wikimedia.org/wikipedia/en/thumb/a/a7/React-icon.svg/1280px-React-icon.svg.png"
+        }
     }
 
     render() {
@@ -34,19 +40,35 @@ export default class HomeScreen extends Component {
                     <TextInput 
                         style={styles.searchText} 
                         placeholder="city" 
-                        placeholderTextColor="#ABABAB" />
+                        placeholderTextColor="#ABABAB"
+                        onEndEditing={(event) => {
+                            console.log("::: CITY ::: " + event.nativeEvent.text);
+                            let city = event.nativeEvent.text;
+
+                            fetch("http://api.openweathermap.org/data/2.5/weather?q=" + city + "&units=metric&APPID=85ce54fbbc886bee15f72e2e0e8b5a3b")
+                            .then((response) => response.json())
+                            .then((json) => {
+                                console.log("::: JSON :::" + JSON.stringify(json));
+
+                                this.setState({cityName: json.name});
+                                this.setState({celsius: json.main.temp});
+                                this.setState({weatherIcon: "http://openweathermap.org/img/w/"+json.weather[0].icon+".png"});
+                            });
+
+                        }}
+                        />
                 </View>
 
                 <View style={styles.cityBox}>
-                    <Text style={[styles.defaultTextStyle, styles.cityText]}>Budapest</Text>
+                    <Text style={[styles.defaultTextStyle, styles.cityText]}>{this.state.cityName}</Text>
                 </View>
                 
                 <View style={styles.temperatureBox}>
                     <Image
                         style={styles.temperatureIcon} 
-                        source={(require('../_assets/image/reactjsicon.png'))} />
+                        source={{uri: this.state.weatherIcon}} />
 
-                    <Text style={[styles.defaultTextStyle, styles.temperatureText]}>32</Text>
+                    <Text style={[styles.defaultTextStyle, styles.temperatureText]}>{this.state.celsius}</Text>
                     <Text style={[styles.defaultTextStyle, styles.temperatureText, styles.temperatureUnit]}>ºC</Text>
                 </View>
 
