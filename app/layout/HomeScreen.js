@@ -58,6 +58,9 @@ export default class HomeScreen extends Component {
                                 this.setState({cityName: json.name});
                                 this.setState({celsius: json.main.temp});
                                 this.setState({weatherIcon: "http://openweathermap.org/img/w/"+json.weather[0].icon+".png"});
+                            })
+                            .catch((error) => {
+                                console.log("::: ERROR :::" + error.message);
                             });
 
                         }}
@@ -128,7 +131,7 @@ const styles = StyleSheet.create({
         marginVertical: 16
     },
     cityText: {
-        fontSize: 64,
+        fontSize: Platform.OS === 'ios' ? 52 : 58,
         fontWeight: 'bold'
     },
 
@@ -138,7 +141,7 @@ const styles = StyleSheet.create({
         alignItems: 'center'
     },
     temperatureText: {
-        fontSize: 72,
+        fontSize: Platform.OS === 'ios' ? 52 : 64,
         fontWeight: 'bold',
         marginHorizontal: 4,
     },
