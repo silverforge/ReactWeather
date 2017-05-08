@@ -11,16 +11,6 @@ import {
   View
 } from 'react-native';
 
-const dummyTemperatureData = [
-    {icon: '', temperature: 24, day: 'tuesday'},
-    {icon: '', temperature: 26, day: 'wednesday'},
-    {icon: '', temperature: 29, day: 'thursday'},
-    {icon: '', temperature: 31, day: 'friday'},
-    {icon: '', temperature: 30, day: 'saturday'},
-    {icon: '', temperature: 26, day: 'sunday'},
-    {icon: '', temperature: 27, day: 'monday'},
-];
-
 export default class HomeScreen extends Component {
 
     constructor(props) {
@@ -30,7 +20,16 @@ export default class HomeScreen extends Component {
         this.state = {
             cityName: "---",
             celsius: 0,
-            weatherIcon: "https://upload.wikimedia.org/wikipedia/en/thumb/a/a7/React-icon.svg/1280px-React-icon.svg.png"
+            weatherIcon: "https://upload.wikimedia.org/wikipedia/en/thumb/a/a7/React-icon.svg/1280px-React-icon.svg.png",
+            temperatureData: [
+                {icon: '', temperature: 24, day: 'tuesday'},
+                {icon: '', temperature: 26, day: 'wednesday'},
+                {icon: '', temperature: 29, day: 'thursday'},
+                {icon: '', temperature: 31, day: 'friday'},
+                {icon: '', temperature: 30, day: 'saturday'},
+                {icon: '', temperature: 26, day: 'sunday'},
+                {icon: '', temperature: 27, day: 'monday'},
+            ]
         }
     }
 
@@ -47,22 +46,39 @@ export default class HomeScreen extends Component {
                             let data = {
                                 city: event.nativeEvent.text, 
                                 apikey: "85ce54fbbc886bee15f72e2e0e8b5a3b", 
-                                unit: "metric"
+                                unit: "metric",
+                                count: 7
                             };
 
                             fetch(`http://api.openweathermap.org/data/2.5/weather?q=${data.city}&units=${data.unit}&APPID=${data.apikey}`)
-                            .then((response) => response.json())
-                            .then((json) => {
-                                console.log("::: JSON :::" + JSON.stringify(json));
+                                .then((response) => response.json())
+                                .then((json) => {
+                                    console.log("::: JSON :::" + JSON.stringify(json));
 
-                                this.setState({cityName: json.name});
-                                this.setState({celsius: json.main.temp});
-                                this.setState({weatherIcon: "http://openweathermap.org/img/w/"+json.weather[0].icon+".png"});
-                            })
-                            .catch((error) => {
-                                console.log("::: ERROR :::" + error.message);
-                            });
+                                    this.setState({cityName: json.name});
+                                    this.setState({celsius: json.main.temp});
+                                    this.setState({weatherIcon: "http://openweathermap.org/img/w/"+json.weather[0].icon+".png"});
+                                })
+                                .catch((error) => {
+                                    console.log("::: ERROR :::" + error.message);
+                                });
 
+                            fetch(`http://api.openweathermap.org/data/2.5/forecast/daily?q=${data.city}&units=${data.unit}&APPID=${data.apikey}&cnt=${data.count}`)
+                                .then((response) => response.json())
+                                .then((json) => {
+                                    let tempList = [];
+
+                                    json.list.forEach(function(element) {
+                                        tempList.push({icon: '', temperature: element.temp.day, day: 'tuesday'});
+                                    }, this);
+
+                                    console.log(JSON.stringify(tempList));
+
+                                    this.setState({temperatureData: tempList});
+                                })
+                                .catch((error) => {
+                                    console.log("::: ERROR :::" + error.message);
+                                });
                         }}
                         />
                 </View>
@@ -81,7 +97,7 @@ export default class HomeScreen extends Component {
                 </View>
 
                 <ListView
-                    dataSource={this.ds.cloneWithRows(dummyTemperatureData)}
+                    dataSource={this.ds.cloneWithRows(this.state.temperatureData)}
                     renderRow={(rowdata) => {
                         return (
                             <View style={styles.rowBox}>
