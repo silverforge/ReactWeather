@@ -11,6 +11,8 @@ import {
   View
 } from 'react-native';
 
+import moment from 'moment';
+
 export default class HomeScreen extends Component {
 
     constructor(props) {
@@ -22,13 +24,13 @@ export default class HomeScreen extends Component {
             celsius: 0,
             weatherIcon: "https://upload.wikimedia.org/wikipedia/en/thumb/a/a7/React-icon.svg/1280px-React-icon.svg.png",
             temperatureData: [
-                {icon: '', temperature: 24, day: 'tuesday'},
-                {icon: '', temperature: 26, day: 'wednesday'},
-                {icon: '', temperature: 29, day: 'thursday'},
-                {icon: '', temperature: 31, day: 'friday'},
-                {icon: '', temperature: 30, day: 'saturday'},
-                {icon: '', temperature: 26, day: 'sunday'},
-                {icon: '', temperature: 27, day: 'monday'},
+                {icon: "https://upload.wikimedia.org/wikipedia/en/thumb/a/a7/React-icon.svg/1280px-React-icon.svg.png", temperature: 24, day: 'tuesday'},
+                {icon: "https://upload.wikimedia.org/wikipedia/en/thumb/a/a7/React-icon.svg/1280px-React-icon.svg.png", temperature: 26, day: 'wednesday'},
+                {icon: "https://upload.wikimedia.org/wikipedia/en/thumb/a/a7/React-icon.svg/1280px-React-icon.svg.png", temperature: 29, day: 'thursday'},
+                {icon: "https://upload.wikimedia.org/wikipedia/en/thumb/a/a7/React-icon.svg/1280px-React-icon.svg.png", temperature: 31, day: 'friday'},
+                {icon: "https://upload.wikimedia.org/wikipedia/en/thumb/a/a7/React-icon.svg/1280px-React-icon.svg.png", temperature: 30, day: 'saturday'},
+                {icon: "https://upload.wikimedia.org/wikipedia/en/thumb/a/a7/React-icon.svg/1280px-React-icon.svg.png", temperature: 26, day: 'sunday'},
+                {icon: "https://upload.wikimedia.org/wikipedia/en/thumb/a/a7/React-icon.svg/1280px-React-icon.svg.png", temperature: 27, day: 'monday'},
             ]
         }
     }
@@ -69,7 +71,8 @@ export default class HomeScreen extends Component {
                                     let tempList = [];
 
                                     json.list.forEach(function(element) {
-                                        tempList.push({icon: '', temperature: element.temp.day, day: 'tuesday'});
+                                        let tempDay = moment.unix(element.dt).format("dddd");
+                                        tempList.push({icon: "http://openweathermap.org/img/w/"+element.weather[0].icon+".png", temperature: element.temp.day, day: tempDay});
                                     }, this);
 
                                     console.log(JSON.stringify(tempList));
@@ -104,7 +107,7 @@ export default class HomeScreen extends Component {
                                 <View style={styles.rowIconBox}>
                                     <Image
                                         style={styles.rowIcon}
-                                        source={(require('../_assets/image/reactjsicon.png'))} />
+                                        source={{uri: rowdata.icon}} />
 
                                     <Text style={[styles.rowText, styles.defaultTextStyle]}>{rowdata.day}</Text>                                
                                 </View>
