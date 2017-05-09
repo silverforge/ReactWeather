@@ -12,6 +12,7 @@ import {
 } from 'react-native';
 
 import moment from 'moment';
+const defaultIconUrl = "https://upload.wikimedia.org/wikipedia/en/thumb/a/a7/React-icon.svg/1280px-React-icon.svg.png";
 
 export default class HomeScreen extends Component {
 
@@ -22,15 +23,15 @@ export default class HomeScreen extends Component {
         this.state = {
             cityName: "---",
             celsius: 0,
-            weatherIcon: "https://upload.wikimedia.org/wikipedia/en/thumb/a/a7/React-icon.svg/1280px-React-icon.svg.png",
+            weatherIcon: defaultIconUrl,
             temperatureData: [
-                {icon: "https://upload.wikimedia.org/wikipedia/en/thumb/a/a7/React-icon.svg/1280px-React-icon.svg.png", temperature: 24, day: 'tuesday'},
-                {icon: "https://upload.wikimedia.org/wikipedia/en/thumb/a/a7/React-icon.svg/1280px-React-icon.svg.png", temperature: 26, day: 'wednesday'},
-                {icon: "https://upload.wikimedia.org/wikipedia/en/thumb/a/a7/React-icon.svg/1280px-React-icon.svg.png", temperature: 29, day: 'thursday'},
-                {icon: "https://upload.wikimedia.org/wikipedia/en/thumb/a/a7/React-icon.svg/1280px-React-icon.svg.png", temperature: 31, day: 'friday'},
-                {icon: "https://upload.wikimedia.org/wikipedia/en/thumb/a/a7/React-icon.svg/1280px-React-icon.svg.png", temperature: 30, day: 'saturday'},
-                {icon: "https://upload.wikimedia.org/wikipedia/en/thumb/a/a7/React-icon.svg/1280px-React-icon.svg.png", temperature: 26, day: 'sunday'},
-                {icon: "https://upload.wikimedia.org/wikipedia/en/thumb/a/a7/React-icon.svg/1280px-React-icon.svg.png", temperature: 27, day: 'monday'},
+                {icon: defaultIconUrl, temperature: 24, day: 'tuesday'},
+                {icon: defaultIconUrl, temperature: 26, day: 'wednesday'},
+                {icon: defaultIconUrl, temperature: 29, day: 'thursday'},
+                {icon: defaultIconUrl, temperature: 31, day: 'friday'},
+                {icon: defaultIconUrl, temperature: 30, day: 'saturday'},
+                {icon: defaultIconUrl, temperature: 26, day: 'sunday'},
+                {icon: defaultIconUrl, temperature: 27, day: 'monday'},
             ]
         }
     }
@@ -150,7 +151,7 @@ const styles = StyleSheet.create({
         marginVertical: 16
     },
     cityText: {
-        fontSize: Platform.OS === 'ios' ? 52 : 58,
+        fontSize: Platform.OS === 'ios' ? 44 : 56,
         fontWeight: 'bold'
     },
 
@@ -160,12 +161,12 @@ const styles = StyleSheet.create({
         alignItems: 'center'
     },
     temperatureText: {
-        fontSize: Platform.OS === 'ios' ? 52 : 64,
+        fontSize: Platform.OS === 'ios' ? 44 : 64,
         fontWeight: 'bold',
         marginHorizontal: 4,
     },
     temperatureUnit: {
-        fontSize: 48,
+        fontSize: 42,
         marginTop: -10
     },
     temperatureIcon: {
@@ -178,7 +179,7 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         marginHorizontal: 16,
         marginVertical: 2,
-        alignItems: 'center',
+        alignItems: 'center'
     },
     rowIconBox: {
         flex: 1,
@@ -189,7 +190,8 @@ const styles = StyleSheet.create({
         height: 50,
     },
     rowText: {
-        fontSize: 32,
-        marginHorizontal: 4       
+        fontSize: Platform.OS === 'ios' ? 22 : 32,
+        marginHorizontal: 4,
+        alignSelf: 'center'   
     }
 });
