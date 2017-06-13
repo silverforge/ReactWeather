@@ -11,7 +11,10 @@ import {
   View
 } from 'react-native';
 
+import SearchBar from '../components/SearchBar';
+
 import moment from 'moment';
+
 const defaultIconUrl = "https://upload.wikimedia.org/wikipedia/en/thumb/a/a7/React-icon.svg/1280px-React-icon.svg.png";
 
 export default class HomeScreen extends Component {
@@ -21,7 +24,7 @@ export default class HomeScreen extends Component {
         this.ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
 
         this.state = {
-            cityName: "---",
+            cityName: "city",
             celsius: 0,
             weatherIcon: defaultIconUrl,
             temperatureData: [
@@ -39,7 +42,14 @@ export default class HomeScreen extends Component {
     render() {
         return (
             <View style={styles.container}>
-                <View style={styles.searchBox}>
+                <SearchBar 
+                    cityName={this.state.cityName}
+                    onCityNameChanged={text => {
+                        this.setState({cityName : text});
+                    }}
+                />
+
+                {/*<View style={styles.searchBox}>
                     <TextInput 
                         style={styles.searchText} 
                         placeholder="city" 
@@ -85,7 +95,7 @@ export default class HomeScreen extends Component {
                                 });
                         }}
                         />
-                </View>
+                </View>*/}
 
                 <View style={styles.cityBox}>
                     <Text style={[styles.defaultTextStyle, styles.cityText]}>{this.state.cityName}</Text>
