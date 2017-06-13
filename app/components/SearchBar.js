@@ -20,6 +20,7 @@ export default class SearchBar extends Component {
                     placeholder={this.cityName} 
                     placeholderTextColor="#ABABAB"
                     onChangeText={this.props.onCityNameChanged}
+                    onEndEditing={this.props.onCityNameEntered}
                     />
             </View>
         );

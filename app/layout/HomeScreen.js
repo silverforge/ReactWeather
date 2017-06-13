@@ -12,6 +12,7 @@ import {
 } from 'react-native';
 
 import SearchBar from '../components/SearchBar';
+import fetcher from '../lib/Fetcher';
 
 import moment from 'moment';
 
@@ -46,6 +47,27 @@ export default class HomeScreen extends Component {
                     cityName={this.state.cityName}
                     onCityNameChanged={text => {
                         this.setState({cityName : text});
+                    }}
+                    onCityNameEntered={event => {
+                        console.log("::: CITY ::: " + event.nativeEvent.text);
+                        let data = {
+                            city: this.state.cityName, 
+                            apikey: "85ce54fbbc886bee15f72e2e0e8b5a3b", 
+                            unit: "metric",
+                            count: 7
+                        }
+                        console.log("::: DATA :::" + JSON.stringify(data));                        
+
+                        fetcher(
+                            `http://api.openweathermap.org/data/2.5/weather?q=${data.city}&units=${data.unit}&APPID=${data.apikey}`,
+                            (json) => {
+                                    console.log("::: JSON :::" + JSON.stringify(json));
+
+                                    this.setState({cityName: json.name});
+                                    this.setState({celsius: json.main.temp});
+                                    this.setState({weatherIcon: "http://openweathermap.org/img/w/"+json.weather[0].icon+".png"});
+                                }
+                            );
                     }}
                 />
 
