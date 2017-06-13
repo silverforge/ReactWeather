@@ -1,22 +1,22 @@
 import React, { Component } from 'react';
 import {
-  AppRegistry,
-  StyleSheet,
+    AppRegistry,
+    StyleSheet,
 
-  Image,
-  ListView,
-  Platform,
-  Text,
-  TextInput,
-  View
+    Image,
+    ListView,
+    Platform,
+    Text,
+    TextInput,
+    View
 } from 'react-native';
 
 import SearchBar from '../components/SearchBar';
 import fetcher from '../lib/Fetcher';
-
 import moment from 'moment';
+import * as UrlBuilder from '../lib/UrlBuilder';
 
-const defaultIconUrl = "https://upload.wikimedia.org/wikipedia/en/thumb/a/a7/React-icon.svg/1280px-React-icon.svg.png";
+import appConfig from '../_config/app_config.json';
 
 export default class HomeScreen extends Component {
 
@@ -27,17 +27,31 @@ export default class HomeScreen extends Component {
         this.state = {
             cityName: "city",
             celsius: 0,
-            weatherIcon: defaultIconUrl,
+            weatherIcon: appConfig.defaultIconUrl,
             temperatureData: [
-                {icon: defaultIconUrl, temperature: 24, day: 'tuesday'},
-                {icon: defaultIconUrl, temperature: 26, day: 'wednesday'},
-                {icon: defaultIconUrl, temperature: 29, day: 'thursday'},
-                {icon: defaultIconUrl, temperature: 31, day: 'friday'},
-                {icon: defaultIconUrl, temperature: 30, day: 'saturday'},
-                {icon: defaultIconUrl, temperature: 26, day: 'sunday'},
-                {icon: defaultIconUrl, temperature: 27, day: 'monday'},
+                {icon: appConfig.defaultIconUrl, temperature: 24, day: 'tuesday'},
+                {icon: appConfig.defaultIconUrl, temperature: 26, day: 'wednesday'},
+                {icon: appConfig.defaultIconUrl, temperature: 29, day: 'thursday'},
+                {icon: appConfig.defaultIconUrl, temperature: 31, day: 'friday'},
+                {icon: appConfig.defaultIconUrl, temperature: 30, day: 'saturday'},
+                {icon: appConfig.defaultIconUrl, temperature: 26, day: 'sunday'},
+                {icon: appConfig.defaultIconUrl, temperature: 27, day: 'monday'},
             ]
         }
+    }
+
+    _fetchCurrentWeather = () => { // use fat arrow functions to avoid binding
+        let urlString = UrlBuilder.getCurrentWeatherUrl(this.state.cityName);
+        fetcher(
+            urlString,
+            (json) => {
+                    console.log("::: JSON :::" + JSON.stringify(json));
+
+                    this.setState({cityName: json.name});
+                    this.setState({celsius: json.main.temp});
+                    this.setState({weatherIcon: UrlBuilder.getWeatherIcon(json.weather[0].icon)});
+                }
+            );
     }
 
     render() {
@@ -45,30 +59,8 @@ export default class HomeScreen extends Component {
             <View style={styles.container}>
                 <SearchBar 
                     cityName={this.state.cityName}
-                    onCityNameChanged={text => {
-                        this.setState({cityName : text});
-                    }}
-                    onCityNameEntered={event => {
-                        console.log("::: CITY ::: " + event.nativeEvent.text);
-                        let data = {
-                            city: this.state.cityName, 
-                            apikey: "85ce54fbbc886bee15f72e2e0e8b5a3b", 
-                            unit: "metric",
-                            count: 7
-                        }
-                        console.log("::: DATA :::" + JSON.stringify(data));                        
-
-                        fetcher(
-                            `http://api.openweathermap.org/data/2.5/weather?q=${data.city}&units=${data.unit}&APPID=${data.apikey}`,
-                            (json) => {
-                                    console.log("::: JSON :::" + JSON.stringify(json));
-
-                                    this.setState({cityName: json.name});
-                                    this.setState({celsius: json.main.temp});
-                                    this.setState({weatherIcon: "http://openweathermap.org/img/w/"+json.weather[0].icon+".png"});
-                                }
-                            );
-                    }}
+                    onCityNameChanged={text => this.setState({cityName : text})}
+                    onCityNameEntered={event => this._fetchCurrentWeather()}
                 />
 
                 {/*<View style={styles.searchBox}>
