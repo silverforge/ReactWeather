@@ -12,6 +12,7 @@ import {
 } from 'react-native';
 
 import SearchBar from '../components/SearchBar';
+import ForecastButton from '../components/ForecastButton';
 import fetcher from '../lib/Fetcher';
 import moment from 'moment';
 import * as UrlBuilder from '../lib/UrlBuilder';
@@ -54,6 +55,26 @@ export default class HomeScreen extends Component {
             );
     }
 
+    _fetchForecastWeather = () => {
+        let urlString = UrlBuilder.getForecastWeatherUrl(this.state.cityName);
+        fetcher(
+            urlString,
+            (json) => {
+                    console.log("::: JSON :::" + JSON.stringify(json));
+
+                    let tempList = [];
+
+                    json.list.forEach(function(element) {
+                        let tempDay = moment.unix(element.dt).format("dddd");
+                        tempList.push({icon: UrlBuilder.getWeatherIcon(element.weather[0].icon), temperature: element.temp.day, day: tempDay});
+                    }, this);
+
+                    console.log(JSON.stringify(tempList));
+                    this.setState({temperatureData: tempList});
+                }
+            );
+    }
+
     render() {
         return (
             <View style={styles.container}>
@@ -63,53 +84,8 @@ export default class HomeScreen extends Component {
                     onCityNameEntered={event => this._fetchCurrentWeather()}
                 />
 
-                {/*<View style={styles.searchBox}>
-                    <TextInput 
-                        style={styles.searchText} 
-                        placeholder="city" 
-                        placeholderTextColor="#ABABAB"
-                        onEndEditing={(event) => {
-                            console.log("::: CITY ::: " + event.nativeEvent.text);
-                            let data = {
-                                city: event.nativeEvent.text, 
-                                apikey: "85ce54fbbc886bee15f72e2e0e8b5a3b", 
-                                unit: "metric",
-                                count: 7
-                            };
-
-                            fetch(`http://api.openweathermap.org/data/2.5/weather?q=${data.city}&units=${data.unit}&APPID=${data.apikey}`)
-                                .then((response) => response.json())
-                                .then((json) => {
-                                    console.log("::: JSON :::" + JSON.stringify(json));
-
-                                    this.setState({cityName: json.name});
-                                    this.setState({celsius: json.main.temp});
-                                    this.setState({weatherIcon: "http://openweathermap.org/img/w/"+json.weather[0].icon+".png"});
-                                })
-                                .catch((error) => {
-                                    console.log("::: ERROR :::" + error.message);
-                                });
-
-                            fetch(`http://api.openweathermap.org/data/2.5/forecast/daily?q=${data.city}&units=${data.unit}&APPID=${data.apikey}&cnt=${data.count}`)
-                                .then((response) => response.json())
-                                .then((json) => {
-                                    let tempList = [];
-
-                                    json.list.forEach(function(element) {
-                                        let tempDay = moment.unix(element.dt).format("dddd");
-                                        tempList.push({icon: "http://openweathermap.org/img/w/"+element.weather[0].icon+".png", temperature: element.temp.day, day: tempDay});
-                                    }, this);
-
-                                    console.log(JSON.stringify(tempList));
-
-                                    this.setState({temperatureData: tempList});
-                                })
-                                .catch((error) => {
-                                    console.log("::: ERROR :::" + error.message);
-                                });
-                        }}
-                        />
-                </View>*/}
+                <ForecastButton 
+                    onTapped={() => this._fetchForecastWeather()} />
 
                 <View style={styles.cityBox}>
                     <Text style={[styles.defaultTextStyle, styles.cityText]}>{this.state.cityName}</Text>
