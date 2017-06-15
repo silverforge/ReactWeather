@@ -1,5 +1,6 @@
+// @flow
 
-const fetcher = (url, processorFunc) => {
+const fetcher = (url: string, processorFunc: Function) => {
     fetch(url)
         .then((response) => response.json())
         .then(processorFunc)
