@@ -16,6 +16,10 @@ export default class ForecastButton extends Component {
         <Icon name="weather-partlycloudy" size={24} color="#FFFFFF" />
     );
 
+    forecastIcon = (
+        <Icon name="weather-night" size={20} color="#FFFFFF" style={{marginHorizontal: 10}} />
+    );
+
     forecastText = (
         <Text style={ForecastButtonStyle.text}>Forecast</Text>
     );
@@ -32,7 +36,8 @@ export default class ForecastButton extends Component {
                 onPress={this.props.onTapped}>
 
                 <View style={{flexDirection: 'row'}}>
-                    {Platform.OS==="android" ? this.fabIcon : this.forecastText}
+                    {Platform.OS === "ios" ? this.forecastIcon : <View />}
+                    {Platform.OS === "android" ? this.fabIcon : this.forecastText}
                 </View>
             </TouchableOpacity>
         );
