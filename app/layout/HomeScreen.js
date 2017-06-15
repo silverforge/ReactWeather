@@ -13,6 +13,7 @@ import {
 
 import SearchBar from '../components/SearchBar';
 import ForecastButton from '../components/ForecastButton';
+import CityTemperatureView from '../components/CityTemperatureView';
 import fetcher from '../lib/Fetcher';
 import moment from 'moment';
 import * as UrlBuilder from '../lib/UrlBuilder';
@@ -29,15 +30,16 @@ export default class HomeScreen extends Component {
             cityName: "city",
             celsius: 0,
             weatherIcon: appConfig.defaultIconUrl,
-            temperatureData: [
-                {icon: appConfig.defaultIconUrl, temperature: 24, day: 'tuesday'},
-                {icon: appConfig.defaultIconUrl, temperature: 26, day: 'wednesday'},
-                {icon: appConfig.defaultIconUrl, temperature: 29, day: 'thursday'},
-                {icon: appConfig.defaultIconUrl, temperature: 31, day: 'friday'},
-                {icon: appConfig.defaultIconUrl, temperature: 30, day: 'saturday'},
-                {icon: appConfig.defaultIconUrl, temperature: 26, day: 'sunday'},
-                {icon: appConfig.defaultIconUrl, temperature: 27, day: 'monday'},
-            ]
+            temperatureData: []
+            // temperatureData: [
+            //     {icon: appConfig.defaultIconUrl, temperature: 24, day: 'tuesday'},
+            //     {icon: appConfig.defaultIconUrl, temperature: 26, day: 'wednesday'},
+            //     {icon: appConfig.defaultIconUrl, temperature: 29, day: 'thursday'},
+            //     {icon: appConfig.defaultIconUrl, temperature: 31, day: 'friday'},
+            //     {icon: appConfig.defaultIconUrl, temperature: 30, day: 'saturday'},
+            //     {icon: appConfig.defaultIconUrl, temperature: 26, day: 'sunday'},
+            //     {icon: appConfig.defaultIconUrl, temperature: 27, day: 'monday'},
+            // ]
         }
     }
 
@@ -63,7 +65,6 @@ export default class HomeScreen extends Component {
                     console.log("::: JSON :::" + JSON.stringify(json));
 
                     let tempList = [];
-
                     json.list.forEach(function(element) {
                         let tempDay = moment.unix(element.dt).format("dddd");
                         tempList.push({icon: UrlBuilder.getWeatherIcon(element.weather[0].icon), temperature: element.temp.day, day: tempDay});
@@ -84,24 +85,19 @@ export default class HomeScreen extends Component {
                     onCityNameEntered={event => this._fetchCurrentWeather()}
                 />
 
+                <CityTemperatureView
+                    cityName={this.state.cityName}
+                    weatherIcon={this.state.weatherIcon}
+                    celsius={this.state.celsius}
+                />
+
                 <ForecastButton 
-                    onTapped={() => this._fetchForecastWeather()} />
-
-                <View style={styles.cityBox}>
-                    <Text style={[styles.defaultTextStyle, styles.cityText]}>{this.state.cityName}</Text>
-                </View>
-                
-                <View style={styles.temperatureBox}>
-                    <Image
-                        style={styles.temperatureIcon} 
-                        source={{uri: this.state.weatherIcon}} />
-
-                    <Text style={[styles.defaultTextStyle, styles.temperatureText]}>{this.state.celsius}</Text>
-                    <Text style={[styles.defaultTextStyle, styles.temperatureText, styles.temperatureUnit]}>ºC</Text>
-                </View>
+                    onTapped={() => this._fetchForecastWeather()} 
+                />
 
                 <ListView
                     dataSource={this.ds.cloneWithRows(this.state.temperatureData)}
+                    enableEmptySections={true}
                     renderRow={(rowdata) => {
                         return (
                             <View style={styles.rowBox}>
