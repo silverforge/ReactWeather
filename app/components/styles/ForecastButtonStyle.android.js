@@ -13,7 +13,7 @@ export default StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'center',
         position: 'absolute',
-        zIndex: 1, // in order to bring the fab to front otherwise it's above the component so will not been touchable
+        zIndex: 1, // in order to bring the fab to front, otherwise it's below the component so will not been touchable
         bottom: 20,
         right: 20,
         elevation: 16
