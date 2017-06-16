@@ -11,7 +11,7 @@ import {
   Text,
   View
 } from 'react-native';
-import HomeScreen from './app/layout/HomeScreen';
+import ShellScreen from './app/layout/ShellScreen';
 
 export default class RNWeather extends Component {
   constructor() {
@@ -21,7 +21,7 @@ export default class RNWeather extends Component {
 
   render() {
     return (
-      <HomeScreen />
+      <ShellScreen />
     );
   }
 }

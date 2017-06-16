@@ -17,6 +17,11 @@ import appConfig from '../_config/app_config.json';
 
 export default class HomeScreen extends Component {
 
+    static navigationOptions = {
+        title: 'Home', 
+        header: null
+    };
+
     constructor(props) {
         super(props);
 
@@ -82,6 +87,7 @@ export default class HomeScreen extends Component {
 
                 <ForecastList
                     items={this.state.temperatureData}
+                    navigation={this.props.navigation}
                 />
             </View>
         );

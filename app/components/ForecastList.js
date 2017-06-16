@@ -20,6 +20,7 @@ export default class ForecastList extends Component {
                     return (
                         <ForecastListItem
                             source={rowdata}
+                            navigation={this.props.navigation}
                         />
                     );
                 }}
