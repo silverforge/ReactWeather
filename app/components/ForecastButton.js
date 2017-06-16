@@ -1,9 +1,8 @@
 import React, { Component } from 'react';
 import {
-    TouchableOpacity,
-    StyleSheet,
     Platform,
 
+    TouchableOpacity,
     Text,
     View
 } from 'react-native';
@@ -23,10 +22,6 @@ export default class ForecastButton extends Component {
     forecastText = (
         <Text style={ForecastButtonStyle.text}>Forecast</Text>
     );
-
-    constructor(props) {
-        super(props)
-    }
 
     render() {
         return (

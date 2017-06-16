@@ -1,8 +1,5 @@
 import React, { Component } from 'react';
 import {
-    StyleSheet,
-    Platform,
-
     Image,
     Text,
     View
