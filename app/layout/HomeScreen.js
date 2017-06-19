@@ -10,7 +10,7 @@ import ForecastButton from '../components/ForecastButton';
 import CityTemperatureView from '../components/CityTemperatureView';
 import ForecastList from '../components/ForecastList';
 import fetcher from '../lib/Fetcher';
-import moment from 'moment';
+import * as ForecastMapper from '../lib/mappers/DailyForecastToForecastListItem';
 import * as UrlBuilder from '../lib/UrlBuilder';
 
 import appConfig from '../_config/app_config.json';
@@ -56,8 +56,7 @@ export default class HomeScreen extends Component {
 
                     let tempList = [];
                     json.list.forEach(function(element) {
-                        let tempDay = moment.unix(element.dt).format("dddd");
-                        tempList.push({icon: UrlBuilder.getWeatherIcon(element.weather[0].icon), temperature: element.temp.day, day: tempDay});
+                        tempList.push(ForecastMapper.map(element));
                     }, this);
 
                     console.log(JSON.stringify(tempList));

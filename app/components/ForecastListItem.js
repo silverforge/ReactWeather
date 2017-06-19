@@ -17,11 +17,12 @@ import app_colors from '../_config/app_colors';
 export default class ForecastListItem extends Component {
     render() {
         const { navigate } = this.props.navigation;
+        console.log("::: DETAILS SOURCE ::: " + JSON.stringify(this.props.source));
 
         return (
             <TouchableHighlight 
                 underlayColor="#EBEBEB"
-                onPress={() => navigate('Details', { item: this.props })}>
+                onPress={() => navigate('Details', { item: this.props.source })}>
 
                 <View>
                     <View style={styles.rowBox}>
