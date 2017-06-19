@@ -9,14 +9,16 @@ import {
 import ForecastButtonStyle from './styles/ForecastButtonStyle';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons'; // https://github.com/oblador/react-native-vector-icons
 
+import app_colors from '../_config/app_colors';
+
 export default class ForecastButton extends Component {
 
     fabIcon = (
-        <Icon name="weather-partlycloudy" size={24} color="#FFFFFF" />
+        <Icon name="weather-partlycloudy" size={24} color={app_colors.button_text} />
     );
 
     forecastIcon = (
-        <Icon name="weather-night" size={20} color="#FFFFFF" style={{marginHorizontal: 10}} />
+        <Icon name="weather-night" size={20} color={app_colors.button_text} style={{marginHorizontal: 10}} />
     );
 
     forecastText = (

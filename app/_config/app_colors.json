@@ -1,0 +1,10 @@
+{
+    "default_text": "#003B3E",
+    "bar_background": "#003B3E",
+    "bar_text": "white",
+    "fab_button_background": "FF5722",
+    "button_text": "white",
+    "button_background_light": "#E5A33B",
+    "button_background_dark": "#FF5722",
+    "separator": "#562354"
+}

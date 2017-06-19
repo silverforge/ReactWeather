@@ -10,6 +10,9 @@ import {
     View
 } from 'react-native';
 import { StackNavigator } from 'react-navigation';
+import DefaultStyle from './styles/DefaultStyle';
+
+import app_colors from '../_config/app_colors';
 
 export default class ForecastListItem extends Component {
     render() {
@@ -28,14 +31,14 @@ export default class ForecastListItem extends Component {
                                 source={{uri: this.props.source.icon}} 
                             />
 
-                            <Text style={[styles.rowText, styles.defaultTextStyle]}>{this.props.source.day}</Text>                                
+                            <Text style={[styles.rowText, DefaultStyle.defaultTextStyle]}>{this.props.source.day}</Text>                                
                         </View>
 
-                        <Text style={[styles.rowText, styles.defaultTextStyle]}>{this.props.source.temperature}</Text>
-                        <Text style={[styles.rowText, styles.defaultTextStyle]}>ºC</Text>
+                        <Text style={[styles.rowText, DefaultStyle.defaultTextStyle]}>{this.props.source.temperature}</Text>
+                        <Text style={[styles.rowText, DefaultStyle.defaultTextStyle]}>ºC</Text>
                     </View>
 
-                    <View style={{height: 1, backgroundColor: "#562354", marginHorizontal: 4, marginVertical: 2 }} />
+                    <View style={{height: 1, backgroundColor: app_colors.separator, marginHorizontal: 4, marginVertical: 2 }} />
                 </View>
             </TouchableHighlight>            
         );
@@ -43,10 +46,6 @@ export default class ForecastListItem extends Component {
 }
 
 const styles = StyleSheet.create({
-    defaultTextStyle: {
-        color: '#003B3E'
-    },
-
     rowBox: {
         flexDirection: 'row',
         marginHorizontal: 16,

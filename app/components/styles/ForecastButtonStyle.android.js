@@ -1,11 +1,12 @@
 import {
     StyleSheet
 } from 'react-native'
+import app_colors from '../../_config/app_colors'
 
 export default StyleSheet.create({
     container: {
-        backgroundColor: '#ff5722',
-        borderColor: '#ff5722',
+        backgroundColor: app_colors.button_background_dark,
+        borderColor: app_colors.button_background_dark,
         borderWidth: 1,
         height: 60,
         width: 60,
@@ -20,6 +21,6 @@ export default StyleSheet.create({
     },
     text: {
         fontSize: 8,
-        color: "#FFFFFF"
+        color: app_colors.button_text
     }
 });
