@@ -1,8 +1,12 @@
 import React, { Component } from 'react';
 import {
-    ListView
+    ListView,
+    StyleSheet,
+    View
 } from 'react-native';
 import ForecastListItem from './ForecastListItem';
+
+import app_colors from '../_config/app_colors';
 
 export default class ForecastList extends Component {
 
@@ -24,7 +28,17 @@ export default class ForecastList extends Component {
                         />
                     );
                 }}
+                renderSeparator={(sectionId, rowId) => <View style={styles.separator} />}
             />            
         );
     }
 }
+
+const styles = StyleSheet.create({
+    separator: {
+        height: 1, 
+        backgroundColor: app_colors.separator, 
+        marginHorizontal: 4, 
+        marginVertical: 2
+    }
+});

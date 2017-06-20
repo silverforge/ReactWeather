@@ -38,8 +38,6 @@ export default class ForecastListItem extends Component {
                         <Text style={[styles.rowText, DefaultStyle.defaultTextStyle]}>{this.props.source.temperature}</Text>
                         <Text style={[styles.rowText, DefaultStyle.defaultTextStyle]}>ºC</Text>
                     </View>
-
-                    <View style={{height: 1, backgroundColor: app_colors.separator, marginHorizontal: 4, marginVertical: 2 }} />
                 </View>
             </TouchableHighlight>            
         );
