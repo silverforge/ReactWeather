@@ -4,6 +4,7 @@ import {
     View
 } from 'react-native';
 import SearchBarStyle from './styles/SearchBarStyle';
+import app_colors from '../_config/app_colors';
 
 export default class SearchBar extends Component {
 
@@ -13,7 +14,7 @@ export default class SearchBar extends Component {
                 <TextInput 
                     style={SearchBarStyle.searchText} 
                     placeholder={this.props.cityName} 
-                    placeholderTextColor="#ABABAB"
+                    placeholderTextColor={app_colors.bar_text_placeholder}
                     onChangeText={this.props.onCityNameChanged}
                     onEndEditing={this.props.onCityNameEntered}
                     />

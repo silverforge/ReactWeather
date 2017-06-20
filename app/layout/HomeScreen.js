@@ -14,6 +14,7 @@ import * as ForecastMapper from '../lib/mappers/DailyForecastToForecastListItem'
 import * as UrlBuilder from '../lib/UrlBuilder';
 
 import appConfig from '../_config/app_config.json';
+import DefaultStyle from './styles/DefaultStyle';
 
 export default class HomeScreen extends Component {
 
@@ -67,7 +68,7 @@ export default class HomeScreen extends Component {
 
     render() {
         return (
-            <View style={styles.container}>
+            <View style={DefaultStyle.screenContainer}>
                 <SearchBar 
                     cityName={this.state.cityName}
                     onCityNameChanged={text => this.setState({cityName : text})}
@@ -92,10 +93,3 @@ export default class HomeScreen extends Component {
         );
     }
 }
-
-const styles = StyleSheet.create({
-     container: {
-         flex: 1,
-         backgroundColor: '#E1E9E1'
-     }
- });

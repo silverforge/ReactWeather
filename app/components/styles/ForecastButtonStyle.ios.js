@@ -11,6 +11,7 @@ export default StyleSheet.create({
         marginTop: 16,
         padding: 10,
         backgroundColor: app_colors.button_background_light,
+        borderColor: app_colors.button_background_dark,
         justifyContent: "center",
         alignItems: "center"
     },

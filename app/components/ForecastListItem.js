@@ -21,7 +21,7 @@ export default class ForecastListItem extends Component {
 
         return (
             <TouchableHighlight 
-                underlayColor="#EBEBEB"
+                underlayColor={app_colors.highlight}
                 onPress={() => navigate('Details', { item: this.props.source })}>
 
                 <View>
